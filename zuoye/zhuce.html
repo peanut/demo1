@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>qq注册界面</title>		
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css"/>
+		<script src="js/jquery-2.2.2.js"></script>
+		<script src="js/jquery.mobile-1.4.5.min.js"></script>
+	</head>
+	<style type="text/css">
+	</style>
+	<body>
+		<div data-role='page' data-theme='a'>
+			<div data-role='header'data-theme='f' >
+				<img src="images/QQ.jpg" style="width: 100%;" />
+			</div>
+			<div data-role='content' id="content" >
+				<label for="text" class='ui-hidden-accessible'>昵称：</label>
+					<input type="text" id="text" name="text" placeholder="昵称："/>
+					<input type="text" id="text2"name="text2"placeholder="账号："/>
+				<form action="" method="post" name="my_f1">
+        		<p>
+            		<input type="password" required="true" name="passwd1" id="password" placeholder="密码：" />
+        		</p>
+        		<p>
+            		<input type="password" required="true" name="passwd2"  id="password2" placeholder="密码确认："/>
+        		</p>
+        		<p>
+            		<input type="submit" value="确认" id="b" />
+        		</p>
+        		</form>
+        	</div>
+        	<div data-role='footer' data-position='fixed' data-theme='a'>
+        	</div>
+   		</div>
+	</body>
+	<script>
+	var txt1=document.getElementById("text"); 
+	var pw2=document.getElementById('password2')
+    var txt=document.getElementById('text2');
+	var pw=document.getElementById('password');
+	var b = document.getElementById('b');
+	pw2.onmouseleave=function(){
+		if(pw.value!=''&&pw2.value!=''){
+			if(pw.value!=pw2.value){
+				alert('两次密码不一致，请重新输入');
+	 			pw.value='';
+	 			pw2.value='';
+	 		}
+		}
+	}	
+	 	$('#b').click(function(){
+		 $.ajax({
+		 	type:'get',
+		 	data:{
+		 		status:'register',
+		 		userID:document.getElementById('text2').value,
+		 		password:document.getElementById('password').value	
+		 	},
+		 	url:'http://datainfo.duapp.com/shopdata/userinfo.php',
+		 	dataType:'json',
+		 	success:function(data){
+		 		if(data==0){alert('用户名重名,请重新输入');txt.value='';}	 
+		 		else if(data==1){alert('恭喜'+txt1.value+'您的账号是：'+txt.value+'密码是: '+pw.value);window.location.href='login.html';}
+		 		},
+		 	error:function(){alert('error');} 	
+		 	})
+	 })
+	</script>
+</html>

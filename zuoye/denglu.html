@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Mobile Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <script src="js/jquery-2.2.2.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<style type="text/css">
+	*{
+		margin: 0 0;
+		padding: 0 0;
+	}
+	#a{
+		text-align: center;
+		width: auto;
+	}
+</style>
+<body>
+    <div data-role="page" id="pageone">
+        <div data-role="content" id="a">
+            <form method="post" action="demoform.asp">
+            	<img src="images/QQ.jpg">
+                <label for="fname" class="ui-hidden-accessible">账号</label>
+                <input type="text" name="text" id="text" placeholder="账号">
+                <input type="password" name="password" id="password" placeholder="密码">	
+                <a href="#anylink"><input type="submit" id="submit" value="登录"></a>
+                <a href="#anylink"><input type="submit" id="zhuce" value="注册"></a>
+            </form>
+        </div>
+    </div> 
+</body>
+<script type="text/javascript">
+	var txt=document.getElementById('text');
+	var pw=document.getElementById('password');
+	var b = document.getElementById('zhuce');
+	 $('#submit').click(function(){
+		 $.ajax({
+		 	type:'get',
+		 	data:{
+		 		status:'login',
+		 		userID:document.getElementById('text').value,
+		 		password:document.getElementById('password').value	
+		 	},
+		 	url:'http://datainfo.duapp.com/shopdata/userinfo.php',
+		 	dataType:'json',
+		 	success:function(data){
+		 		if(data==0){alert('密码错误,请重新输入');pw.value='';}
+		 		else if(data==2){alert('用户名与密码不符，请重新输入');txt.value='';pw.value='';}		 
+		 		else{window.location.href='xiaoxi.html';alert('登录成功，您的用户名为：'+txt.value+',密码为：'+pw.value);}
+		 		},
+		 	error:function(){
+		 		alert('error');
+		 	}
+		 		 })
+		 })
+	$('#zhuce').click(function(){
+	 	window.location.href='zhuce.html';
+	})
+</script>
+</html>
